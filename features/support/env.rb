@@ -2,7 +2,11 @@ require 'capybara/cucumber'
 require 'capybara-screenshot/cucumber'
 
 $target_loc = "http://gcloud-todos.appspot.com/examples/angularjs/#/"
-
+$num_of_todo = 0
+$content_text = ""
+$todo_count = 0
+$complete_count = 0
+$at_the_time = ""
 
 ## See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 #RSpec.configure do |_config|
