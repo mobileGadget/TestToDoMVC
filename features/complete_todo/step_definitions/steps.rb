@@ -2,7 +2,6 @@ require 'pry'
 
 # init variables
 $num_of_todo = 0
-complete_item_index = 0
 $todo_count = 0
 $complete_count = 0
 
@@ -35,31 +34,42 @@ end
 When(/^I check the box of the todo item to be complete$/) do
     expect(page).to have_current_path('/examples/angularjs/')
     li_list = page.all('#todo-list li')
-    for i in 0..li_list.count
-        if li_list[i].text == $content_text
-            li_list[i].find('div input').click
-            complete_item_index = i
+    found = false
+    i = 0
+    while not found
+        if i == li_list.count
             break
         end
+        if li_list[i].text == $content_text
+            li_list[i].find('div input').click
+            found = true
+        end
+        i += 1
     end
 
 end
 
 Then(/^I expect the item to be marked complete$/) do
-    found = false
     click_link('Completed')
     expect(page).to have_current_path('/examples/angularjs/')
     li_list = page.all('#todo-list li')
-    for i in 1..li_list.count
-        #binding.pry
+
+    found = false
+    i = 0
+    while not found
+        if i == li_list.count
+            break
+        end
         if li_list[i].text == $content_text
-            new_todo_count = page.all('#todo-count strong')[0].text.to_i
-            expect(new_todo_count).to eq($todo_count - 1)
-            new_complete_count = page.all(:id, 'clear-completed')[0].text.gsub(/Clear completed \(|\)$/, '').to_i
-            expect(new_complete_count).to eq($complete_count + 1)
             found = true
         end
+        i += 1
     end
+
+    new_todo_count = page.all('#todo-count strong')[0].text.to_i
+    expect(new_todo_count).to eq($todo_count - 1)
+    new_complete_count = page.all(:id, 'clear-completed')[0].text.gsub(/Clear completed \(|\)$/, '').to_i        
+    expect(new_complete_count).to eq(li_list.count)
 
     if not found
         expect('complete element not found').to eq(failed)
