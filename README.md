@@ -9,5 +9,6 @@ To run the automate test suite:
 2. Check that the latest is in master (or experiment with the latest branch)
 3. Type 'bundle install' without quotes
 4. Type 'BROWSER=chrome cucumber' or optional for the BROWSER flag if running the test using firefox, just type 'cucumber'.  BROWSER=safari or ie is also possible providing the correct drivers have been installed.  You can find more info here: https://github.com/SeleniumHQ/selenium/wiki/SafariDriver and here: http://selenium-release.storage.googleapis.com/index.html
-5. If any test fails, a report will be under results/ folder
+5. To run a specific test, use a tag.  E.g. type 'cucumber --tags @add_a_new_todo_item'
+6. If any test fails, a report will be under results/ folder
 
